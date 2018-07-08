@@ -11,5 +11,8 @@
     "actions-on-google": "^2.0.0",
     "express": "^4.16.3",
     "body-parser": "^1.18.3"
-  }
+  },
+  "scripts": {
+    "start": "node index.js"
+}
 }
