@@ -9,6 +9,9 @@ var proc = {};
 var internal = {};
 
 proc.getVerse = function(bookName,chapter,verse){
+    if(verse<0){
+        verse = -1 * verse; //To overcome issue in John 3-16 where verse comes as -16
+    }
     const bookNum = internal.getBookSequenceNumber(bookName);
     if(bookNum == -1){
         //TODO; handle it
@@ -18,7 +21,7 @@ proc.getVerse = function(bookName,chapter,verse){
     const data = jsonfile.readFileSync(chapterFile).data;
     const result = data.filter(a => a.c == chapter && a.v == verse );
     if(result.length == 0){
-        return "Sorry. This verse does not exits."; //TODO, 1. Add to strings file 2. Give max chapters in the book / max verse in chapter
+        return "Sorry. This verse does not exist."; //TODO, 1. Add to strings file 2. Give max chapters in the book / max verse in chapter
     }else{
         return result[0].d;
     }
@@ -34,7 +37,7 @@ proc.getChapter = function(bookName,chapter){
     const data = jsonfile.readFileSync(chapterFile).data;
     const result = data.filter(a => a.c == chapter );
     if(result.length == 0){
-        return "Sorry. This chapter does not exits."; //TODO, 1. Add to strings file 2. Give max chapters in the book 
+        return "Sorry. This chapter does not exist."; //TODO, 1. Add to strings file 2. Give max chapters in the book 
     }else{
         var finalResult=""; //TODO, add SSML
         result.forEach(function(el){
