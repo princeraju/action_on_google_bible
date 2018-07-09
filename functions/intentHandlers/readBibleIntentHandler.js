@@ -32,7 +32,7 @@ exports.handle = function(conv){
             verse1 = conv.data.bibleReadFollowUpParameters[constants.PARAMETERS.VERSE1];
         }
 
-        console.log("Normal Int:"+book1+" "+utils.isNormalInteger);
+        console.log("Normal Int:"+book1+" "+utils.isNormalInteger(book1));
         if(utils.isNormalInteger(book1)){ //Case when book intent may take number
             if(!chapter1){
                 chapter1 = parseInt(book1);
