@@ -5,7 +5,6 @@ const {
     SimpleResponse,
 } = require('actions-on-google');
 
-const constants = require("../constants");
 const bibleReadProcessor = require("../dataProcessors/bibleReadProcessor");
 
 var internal = {}
@@ -25,7 +24,8 @@ exports.handle = function(conv,type){
 
     if(type){
         if(conv.data.previousBibleVerse && conv.data.previousBibleVerse.verse && conv.data.previousBibleVerse.verse.id){
-
+            var result = bibleReadProcessor.getPrevNextVerse(conv.data.previousBibleVerse.verse.id);
+            internal.sayBibleVerse(conv,result);
         }else{
             conv.ask('I don\'t remember you asking me anything to read. Can you help me by telling what exactly you need?');
             conv.ask(new Suggestions(internal.mainSuggestions));

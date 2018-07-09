@@ -76,7 +76,7 @@ internal.sayBibleVerse = function(conv,result) {
     }else{
         conv.data.bibleReadFollowUpParameters = {};
         conv.ask(new SimpleResponse({
-            speech: `<speak>There does not seem to be any response. Can I help you in some other way?</speak>`,
+            speech: `<speak>Oh hoo..Ther's some issue. Can I help you in some other way?</speak>`,
             text: `How can I help you?`,
           }));
         conv.ask(new Suggestions(internal.mainSuggestions));
