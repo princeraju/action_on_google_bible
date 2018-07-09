@@ -18,6 +18,7 @@ exports.handle = function(conv){
     var book1 = parameters[constants.PARAMETERS.BOOK1];
     var chapter1 = parameters[constants.PARAMETERS.CHAPTER1];
     var verse1 = parameters[constants.PARAMETERS.VERSE1];
+    var anyNum = parameters[constants.PARAMETERS.ANY_NUM];
 
     if(conv.data.bibleReadFollowUpParameters){
 
@@ -32,12 +33,11 @@ exports.handle = function(conv){
             verse1 = conv.data.bibleReadFollowUpParameters[constants.PARAMETERS.VERSE1];
         }
 
-        console.log("Normal Int:"+book1+" "+utils.isNormalInteger(book1));
-        if(utils.isNormalInteger(book1)){ //Case when book intent may take number
+        if(anyNum){ //Case when book intent may take number
             if(!chapter1){
-                chapter1 = parseInt(book1);
+                chapter1 = anyNum;
             }else if(!verse1){
-                verse1 = parseInt(book1);
+                verse1 = anyNum;
             }
         }
     }

@@ -18,7 +18,8 @@ var constants ={
     "PARAMETERS" : {
         "BOOK1" : "book1",
         "CHAPTER1" : "chapter1",
-        "VERSE1" : "verse1"
+        "VERSE1" : "verse1",
+        "ANY_NUM" : "anyNum"
     },
     "NEXT" : "next_verse",
     "PREVIOUS" : "prev_verse"
