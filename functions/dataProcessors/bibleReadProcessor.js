@@ -37,7 +37,7 @@ proc.getVerse = function(bookName,chapter,verse){
     }
 
     if(!verse){
-        result.followUpMessage = "What verse would you like to hear?";
+        result.followUpMessage = "and what verse?";
         result.followUpSuggestions=['Verse 5','Verse 2','Verse 1']; //TODO, add to suggestion generator
         return result;
     }
