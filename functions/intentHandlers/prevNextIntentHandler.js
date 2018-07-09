@@ -24,7 +24,7 @@ exports.handle = function(conv,type){
     console.log("prevNextIntentHandler previous data:"+JSON.stringify(conv.data));
     if(type){
         if(conv.data.previousBibleVerse && conv.data.previousBibleVerse.id){
-            var result = bibleReadProcessor.getPrevNextVerse(conv.data.previousBibleVerse.id);
+            var result = bibleReadProcessor.getPrevNextVerse(conv.data.previousBibleVerse.id,type);
             internal.sayBibleVerse(conv,result);
         }else{
             conv.ask('Ohh.. I don\'t remember you asking me anything to read. Can you help me by telling what exactly you need?');
