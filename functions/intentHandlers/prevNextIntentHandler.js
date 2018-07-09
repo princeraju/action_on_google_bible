@@ -23,8 +23,8 @@ exports.handle = function(conv,type){
     conv.data.bibleReadFollowUpParameters = {};
     console.log(JSON.stringify(conv.data));
     if(type){
-        if(conv.data.previousBibleVerse && conv.data.previousBibleVerse.verse && conv.data.previousBibleVerse.verse.id){
-            var result = bibleReadProcessor.getPrevNextVerse(conv.data.previousBibleVerse.verse.id);
+        if(conv.data.previousBibleVerse && conv.data.previousBibleVerse.id){
+            var result = bibleReadProcessor.getPrevNextVerse(conv.data.previousBibleVerse.id);
             internal.sayBibleVerse(conv,result);
         }else{
             conv.ask('Ohh.. I don\'t remember you asking me anything to read. Can you help me by telling what exactly you need?');
