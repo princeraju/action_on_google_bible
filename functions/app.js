@@ -4,6 +4,7 @@ const app = require('actions-on-google').dialogflow();
 const constants = require('./constants');
 const readBibleIntentHandler = require('./intentHandlers/readBibleIntentHandler');
 const welcomeIntentHandler = require('./intentHandlers/welcomeIntentHandler');
+const prevNextIntentHandler = require('./intentHandlers/prevNextIntentHandler');
 
 app.intent( constants.INTENTS.READ_BIBLE_INTENT , (conv) => {
     readBibleIntentHandler.handle(conv);
