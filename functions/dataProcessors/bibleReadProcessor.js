@@ -21,7 +21,7 @@ proc.getVerse = function(bookName,chapter,verse){
     const bookNum = internal.getBookSequenceNumber(bookName);
     result.followUpCurrentParameters = {};
     if(bookNum == -1){
-        result.followUpMessage = "Please tell me a valid book in bible.";
+        result.followUpMessage = "I'm not clear about the name of the book. Can you say a book name like 'Psalms' or 'Matthew'?";
         result.followUpSuggestions=['1 John','Psalms','Ruth']; //TODO, add to suggestion generator
         return result;
     }else{

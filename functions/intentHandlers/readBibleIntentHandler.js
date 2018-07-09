@@ -7,6 +7,7 @@ const {
 
 const bibleReadProcessor = require("../dataProcessors/bibleReadProcessor");
 const constants = require("../constants");
+const utils = require("../utils");
 
 exports.handle = function(conv){
     const parameters = conv.parameters;
@@ -19,6 +20,8 @@ exports.handle = function(conv){
     var verse1 = parameters[constants.PARAMETERS.VERSE1];
 
     if(conv.data.bibleReadFollowUpParameters){
+
+        //Updating variables based on previous values
         if(!book1 && conv.data.bibleReadFollowUpParameters[constants.PARAMETERS.BOOK1]){
             book1 = conv.data.bibleReadFollowUpParameters[constants.PARAMETERS.BOOK1];
         }
@@ -27,6 +30,15 @@ exports.handle = function(conv){
         }
         if(!verse1 && conv.data.bibleReadFollowUpParameters[constants.PARAMETERS.VERSE1]){
             verse1 = conv.data.bibleReadFollowUpParameters[constants.PARAMETERS.VERSE1];
+        }
+
+
+        if(utils.isNormalInteger(book1)){ //Case when book intent may take number
+            if(!chapter1){
+                chapter1 = parseInt(book1);
+            }else if(!verse1){
+                verse1 = parseInt(book1);
+            }
         }
     }
     
