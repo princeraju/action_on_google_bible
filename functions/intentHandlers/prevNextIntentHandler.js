@@ -21,7 +21,7 @@ internal.sucessBibleReadSuggestions=[
 
 exports.handle = function(conv,type){
     conv.data.bibleReadFollowUpParameters = {};
-    console.log(JSON.stringify(conv.data));
+    console.log("prevNextIntentHandler previous data:"+JSON.stringify(conv.data));
     if(type){
         if(conv.data.previousBibleVerse && conv.data.previousBibleVerse.id){
             var result = bibleReadProcessor.getPrevNextVerse(conv.data.previousBibleVerse.id);

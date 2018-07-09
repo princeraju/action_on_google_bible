@@ -11,8 +11,8 @@ const constants = require("../constants");
 exports.handle = function(conv){
     const parameters = conv.parameters;
 
-    console.log("Parameters:"+JSON.stringify(parameters));
-    console.log("Previous Data:"+JSON.stringify(conv.data));
+    console.log("readbibleIntentHandler Parameters:"+JSON.stringify(parameters));
+    console.log("readbibleIntentHandler Previous Data:"+JSON.stringify(conv.data));
 
     var book1 = parameters[constants.PARAMETERS.BOOK1];
     var chapter1 = parameters[constants.PARAMETERS.CHAPTER1];
