@@ -11,7 +11,12 @@ var constants ={
     "INTENTS" : {
         "READ_BIBLE_INTENT" : "readBible"
     },
-    "CHAPTER_FILE_NAME_SUFFIX" : "_content"
+    "CHAPTER_FILE_NAME_SUFFIX" : "_content",
+    "PARAMETERS" : {
+        "BOOK1" : "book1",
+        "CHAPTER1" : "chapter1",
+        "VERSE1" : "verse1"
+    }
     
 };
 
