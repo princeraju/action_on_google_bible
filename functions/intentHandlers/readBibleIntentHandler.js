@@ -41,12 +41,12 @@ var internal = {}
 internal.mainSuggestions=[ //TODO create a suggetsion generator
     'Read John 3:16',
     'Proverbs 1:1'
-]
+];
 
 internal.sucessBibleReadSuggestions=[
     'Read the next verse',
     'Read the previous verse'
-]
+];
 
 internal.sayBibleVerse = function(conv,result) {
     //result.followUpMessage eg: What chapter do you want to read
@@ -67,7 +67,7 @@ internal.sayBibleVerse = function(conv,result) {
         }
     }else if(result.verse){
         conv.data.bibleReadFollowUpParameters = {};
-        conv.data.previousBibleVerse = result.verse
+        conv.data.previousBibleVerse = result.verse;
         conv.ask(new SimpleResponse({
             speech: `<speak>${result.verse.words}  <break strength="weak"/> ${result.verse.pos} </speak>`,
             text: `${result.verse.pos}\n ${result.verse.words}`,

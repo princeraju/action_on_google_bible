@@ -9,14 +9,19 @@ var constants ={
         }
     },
     "INTENTS" : {
-        "READ_BIBLE_INTENT" : "readBible"
+        "READ_BIBLE_INTENT" : "readBible",
+        "WELCOME_INTET" : "welcomeIntent",
+        "NEXT_VERSE_INTENT" : "readNextVerse",
+        "PREV_VERSE_INTENT" : "readPrevVerse"
     },
     "CHAPTER_FILE_NAME_SUFFIX" : "_content",
     "PARAMETERS" : {
         "BOOK1" : "book1",
         "CHAPTER1" : "chapter1",
         "VERSE1" : "verse1"
-    }
+    },
+    "NEXT" : "next_verse",
+    "PREVIOUS" : "prev_verse"
     
 };
 

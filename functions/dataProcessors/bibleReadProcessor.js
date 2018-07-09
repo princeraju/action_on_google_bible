@@ -64,6 +64,51 @@ proc.getVerse = function(bookName,chapter,verse){
     }
 }
 
+proc.getPrevNextVerse = function(id,type){
+    var temp = parseInt(id);
+    const verse = temp%1000; temp = temp/1000;
+    const chapter = temp%1000; temp = temp/1000;
+    const bookNum = temp%1000;
+
+    const chapterFile = utils.getBibleContentFolderLocation()+"/"+bookNum+constants.CHAPTER_FILE_NAME_SUFFIX+".json";
+    const data = jsonfile.readFileSync(chapterFile).data;
+    const resultBibleIndex = data.findIndex(a => a.c == chapter && a.v == verse );
+
+    if(type == constants.PREVIOUS && resultBibleIndex == 0 ){
+        result.errormessage = `You previously heard ${internal.convertBibleIdToString(id)} which is the first verse of the book`;
+    }else if( type == constants.NEXT &&  resultBibleIndex == data.length-1 ){
+        result.errormessage = `You just heard ${internal.convertBibleIdToString(id)} which is the last verse of the book`;
+    }else{
+        var returnResVerse;
+        if(type == constants.PREVIOUS){
+            returnResVerse = data[resultBibleIndex-1];
+        }else if(type == constants.NEXT){
+            returnResVerse = data[resultBibleIndex+1];
+        }
+        result.verse = {};
+        result.verse.pos = internal.convertBibleIdToString(returnResVerse.id);
+        result.id = returnResVerse.id;
+        result.verse.words = returnResVerse.d;
+    }
+};
+
+internal.convertBibleIdToString = function(id){
+    var temp = parseInt(id);
+    const verse = temp%1000; temp = temp/1000;
+    const chapter = temp%1000; temp = temp/1000;
+    const bookNum = temp%1000;
+
+    const keyEnglish = utils.getBookKeyFileLocation();
+    const keys = jsonfile.readFileSync(keyEnglish).resultset.keys;
+    const resultKey = keys.filter( arr => arr.b == bookNum );
+
+    if(result.length == 0){
+        return -1;
+    }
+    return `${resultKey[0].n} ${chapter}:${verse}`;
+    
+};
+
 internal.getBookSequenceNumber = function(bookName){
     if(!bookName){
         return -1;
