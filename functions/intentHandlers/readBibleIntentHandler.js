@@ -69,14 +69,14 @@ internal.sayBibleVerse = function(conv,result) {
         conv.data.bibleReadFollowUpParameters = {};
         conv.data.previousBibleVerse = result.verse;
         conv.ask(new SimpleResponse({
-            speech: `<speak>${result.verse.words}  <break strength="weak"/> ${result.verse.pos} </speak>`,
+            speech: `<speak>${result.verse.pos}<break strength="weak"/> ${result.verse.words}</speak>`, //put to central loc
             text: `${result.verse.pos}\n ${result.verse.words}`,
           }));
         conv.ask(new Suggestions(internal.sucessBibleReadSuggestions));
     }else{
         conv.data.bibleReadFollowUpParameters = {};
         conv.ask(new SimpleResponse({
-            speech: `<speak>Oh hoo..Ther's some issue. Can I help you in some other way?</speak>`,
+            speech: `<speak>Oh hoo..There's some issue. Can I help you in some other way?</speak>`,
             text: `How can I help you?`,
           }));
         conv.ask(new Suggestions(internal.mainSuggestions));

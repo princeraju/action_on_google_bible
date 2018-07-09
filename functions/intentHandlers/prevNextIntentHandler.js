@@ -50,7 +50,7 @@ internal.sayBibleVerse = function(conv,result) {
     }else if(result.verse){
         conv.data.previousBibleVerse = result.verse;
         conv.ask(new SimpleResponse({
-            speech: `<speak>${result.verse.words}  <break strength="weak"/> ${result.verse.pos} </speak>`,
+            speech: `<speak>${result.verse.pos}<break strength="weak"/> ${result.verse.words}</speak>`, //Put to central loc
             text: `${result.verse.pos}\n ${result.verse.words}`,
           }));
         conv.ask(new Suggestions(internal.sucessBibleReadSuggestions));
