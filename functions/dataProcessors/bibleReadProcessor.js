@@ -30,7 +30,7 @@ proc.getVerse = function(bookName,chapter,verse){
 
     if(!chapter){
         result.followUpMessage = "What chapter would you like to hear?";
-        result.followUpSuggestions=[5,2,1]; //TODO, add to suggestion generator
+        result.followUpSuggestions=['Chapter 5','Chapter 2','Chapter 1']; //TODO, add to suggestion generator
         return result;
     }else{
         result.followUpCurrentParameters[constants.PARAMETERS.CHAPTER1] = chapter;
@@ -38,7 +38,7 @@ proc.getVerse = function(bookName,chapter,verse){
 
     if(!verse){
         result.followUpMessage = "What verse would you like to hear?";
-        result.followUpSuggestions=[5,2,1]; //TODO, add to suggestion generator
+        result.followUpSuggestions=['Verse 5','Verse 2','Verse 1']; //TODO, add to suggestion generator
         return result;
     }
 
