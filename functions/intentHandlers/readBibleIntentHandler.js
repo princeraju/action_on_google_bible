@@ -32,7 +32,6 @@ exports.handle = function(conv){
     
 
     var result = bibleReadProcessor.getVerse(book1 , chapter1, verse1 ) ;
-    console.log(result);
     internal.sayBibleVerse(conv,result);
 
 };
@@ -64,7 +63,7 @@ internal.sayBibleVerse = function(conv,result) {
             conv.data.bibleReadFollowUpParameters = result.followUpCurrentParameters;
         }
         if(result.followUpSuggestions){
-            conv.ask(result.followUpSuggestions);
+            conv.ask(new Suggestions(result.followUpSuggestions));
         }
     }else if(result.verse){
         conv.data.bibleReadFollowUpParameters = {};
