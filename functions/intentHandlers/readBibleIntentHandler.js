@@ -11,19 +11,28 @@ const constants = require("../constants");
 exports.handle = function(conv){
     const parameters = conv.parameters;
 
-    console.log(JSON.stringify(parameters));
-    if(!parameters[constants.PARAMETERS.BOOK1]  && (parameters[constants.PARAMETERS.chapter1] || parameters[constants.PARAMETERS.VERSE1] ) ){
-        //TODO, read previous request and do it based on the context
-    }else if( parameters[constants.PARAMETERS.BOOK1] && parameters[constants.PARAMETERS.CHAPTER1] && parameters[constants.PARAMETERS.VERSE1] ){
-        conv.data.parameters = parameters
-        conv.ask( 
-            bibleReadProcessor.getVerse(parameters[constants.PARAMETERS.BOOK1] , parameters[constants.PARAMETERS.CHAPTER1], parameters[constants.PARAMETERS.VERSE1] ) 
-        );
-    }else if(parameters.book1 && parameters.chapter1){
-        //TODO Ask verse
-    }else if(parameters.book1){
-        //TODO, Ask which chapter or verse with example
+    console.log("Parameters:"+JSON.stringify(parameters));
+    console.log("Previous Data:"+JSON.stringify(conv.data));
+
+    var book1 = parameters[constants.PARAMETERS.BOOK1];
+    var chapter1 = parameters[constants.PARAMETERS.CHAPTER1];
+    var verse1 = parameters[constants.PARAMETERS.VERSE1];
+
+    if(conv.data.bibleReadFollowUpParameters){
+        if(!book1 && conv.data.bibleReadFollowUpParameters[constants.PARAMETERS.BOOK1]){
+            book1 = conv.data.bibleReadFollowUpParameters[constants.PARAMETERS.BOOK1];
+        }
+        if(!chapter1 && conv.data.bibleReadFollowUpParameters[constants.PARAMETERS.CHAPTER1]){
+            chapter1 = conv.data.bibleReadFollowUpParameters[constants.PARAMETERS.CHAPTER1];
+        }
+        if(!verse1 && conv.data.bibleReadFollowUpParameters[constants.PARAMETERS.VERSE1]){
+            verse1 = conv.data.bibleReadFollowUpParameters[constants.PARAMETERS.VERSE1];
+        }
     }
+    
+
+    var result = bibleReadProcessor.getVerse(book1 , chapter1, verse1 ) ;
+    internal.sayBibleVerse(conv,result);
 
 };
 
@@ -46,13 +55,18 @@ internal.sayBibleVerse = function(conv,result) {
     //result.verse.pos eg: John 3:16
     //result.id eg: 1001001
     //result.verse.words eg: For God so loved....
+    //result.followUpSuggestions
 
     if(result.followUpMessage){
         conv.ask(result.followUpMessage);
         if(result.followUpCurrentParameters){
             conv.data.bibleReadFollowUpParameters = result.followUpCurrentParameters;
         }
+        if(result.followUpSuggestions){
+            conv.ask(new Suggestions(result.followUpSuggestions));
+        }
     }else if(result.verse){
+        conv.data.bibleReadFollowUpParameters = {};
         conv.data.previousBibleVerse = result.verse
         conv.ask(new SimpleResponse({
             speech: `<speak>${result.verse.words}</speak>`,
@@ -60,6 +74,7 @@ internal.sayBibleVerse = function(conv,result) {
           }));
         conv.ask(new Suggestions(internal.sucessBibleReadSuggestions));
     }else{
+        conv.data.bibleReadFollowUpParameters = {};
         conv.ask(new SimpleResponse({
             speech: `<speak>There does not seem to be any response. Can I help you in some other way?</speak>`,
             text: `How can I help you?`,
