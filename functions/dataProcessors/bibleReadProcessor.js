@@ -87,7 +87,7 @@ proc.getPrevNextVerse = function(id,type){
         }
         result.verse = {};
         result.verse.pos = internal.convertBibleIdToString(returnResVerse.id);
-        result.id = returnResVerse.id;
+        result.verse.id = returnResVerse.id;
         result.verse.words = returnResVerse.d;
     }
     return result;
