@@ -6,18 +6,9 @@ const {
 } = require('actions-on-google');
 
 const bibleReadProcessor = require("../dataProcessors/bibleReadProcessor");
+const intentUtils = require("../intentUtils");
 
 var internal = {}
-
-internal.mainSuggestions=[ //TODO create a suggetsion generator
-    'Read John 3:16',
-    'Proverbs 1:1'
-];
-
-internal.sucessBibleReadSuggestions=[
-    'Read the next verse',
-    'Read the previous verse'
-];
 
 exports.handle = function(conv,type){
     conv.data.bibleReadFollowUpParameters = {};
@@ -25,7 +16,7 @@ exports.handle = function(conv,type){
     if(type){
         if(conv.data.previousBibleVerse && conv.data.previousBibleVerse.id){
             var result = bibleReadProcessor.getPrevNextVerse(conv.data.previousBibleVerse.id,type);
-            internal.sayBibleVerse(conv,result);
+            intentUtils.readBible(conv,result);
         }else{
             conv.ask('Ohh.. I don\'t remember you asking me anything to read. Can you help me by telling what exactly you need?');
             conv.ask(new Suggestions(internal.mainSuggestions));
@@ -37,29 +28,7 @@ exports.handle = function(conv,type){
     
 };
 
-internal.sayBibleVerse = function(conv,result) {
-    //result.texerrormessaget
-    //result.verse
-    //result.verse.pos eg: John 3:16
-    //result.id eg: 1001001
-    //result.verse.words eg: For God so loved....
 
-    if(result.errormessage){
-        conv.ask(result.errormessage);
-        conv.ask(new Suggestions(internal.sucessBibleReadSuggestions));
-    }else if(result.verse){
-        conv.data.previousBibleVerse = result.verse;
-        conv.ask(new SimpleResponse({
-            speech: `<speak>${result.verse.pos}<break time="500ms"/> ${result.verse.words}</speak>`, //Put to central loc
-            text: `${result.verse.pos}\n ${result.verse.words}`,
-          }));
-        conv.ask(new Suggestions(internal.sucessBibleReadSuggestions));
-    }else{
-        conv.data.bibleReadFollowUpParameters = {};
-        conv.ask(`There seems to be issue. Can I help you in some other way?`);
-        conv.ask(new Suggestions(internal.mainSuggestions));
-    }
-};
 
 
 

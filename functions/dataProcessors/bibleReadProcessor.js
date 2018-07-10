@@ -64,6 +64,7 @@ proc.getVerse = function(bookName,chapter,verse){
     }
 }
 
+
 proc.getPrevNextVerse = function(id,type){
     var temp = parseInt(id);
     const verse = parseInt(temp%1000); temp = parseInt(temp/1000);
@@ -76,9 +77,9 @@ proc.getPrevNextVerse = function(id,type){
     const resultBibleIndex = data.findIndex(a => a.c == chapter && a.v == verse );
 
     if(type == constants.PREVIOUS && resultBibleIndex == 0 ){
-        result.errormessage = `You previously heard ${internal.convertBibleIdToString(id)} which is the first verse of the book`;
+        result.errormessage = `You previously heard ${internal.getBibleIdToString(id)} which is the first verse of the book`;
     }else if( type == constants.NEXT &&  resultBibleIndex == data.length-1 ){
-        result.errormessage = `You just heard ${internal.convertBibleIdToString(id)} which is the last verse of the book`;
+        result.errormessage = `You just heard ${internal.getBibleIdToString(id)} which is the last verse of the book`;
     }else{
         if(type == constants.PREVIOUS){
             var returnResVerse = data[resultBibleIndex-1];
@@ -86,24 +87,26 @@ proc.getPrevNextVerse = function(id,type){
             var returnResVerse = data[resultBibleIndex+1];
         }
         result.verse = {};
-        result.verse.pos = internal.convertBibleIdToString(returnResVerse.id);
+        result.verse.pos = proc.getBibleIdToString(returnResVerse.id);
         result.verse.id = returnResVerse.id;
         result.verse.words = returnResVerse.d;
     }
     return result;
 };
 
-internal.convertBibleIdToString = function(id){
+internal.bibleBookKeys = jsonfile.readFileSync(utils.getBookKeyFileLocation()).resultset.keys;;
+
+proc.getBibleIdToString = function(id){
     var temp = parseInt(id);
     const verse = parseInt(temp%1000); temp = parseInt(temp/1000);
     const chapter = parseInt(temp%1000); temp = parseInt(temp/1000);
     const bookNum = parseInt(temp%1000);
 
-    const keyEnglish = utils.getBookKeyFileLocation();
-    const keys = jsonfile.readFileSync(keyEnglish).resultset.keys;
+    const keys = internal.bibleBookKeys;
     const resultKey = keys.filter( arr => arr.b == bookNum );
 
     if(resultKey.length == 0){
+        console.log("Id to string conversion failed for: "+id);
         return -1;
     }
     return `${resultKey[0].n} ${chapter}:${verse}`;
@@ -114,8 +117,7 @@ internal.getBookSequenceNumber = function(bookName){
     if(!bookName){
         return -1;
     }
-    const keyEnglish = utils.getBookKeyFileLocation();
-    const keys = jsonfile.readFileSync(keyEnglish).resultset.keys;
+    const keys = internal.bibleBookKeys;
     const result = keys.filter( arr => arr.n == bookName );
     if(result.length == 0){
         return -1;
