@@ -9,13 +9,17 @@ var proc = {};
 var internal = {};
 internal.suggestionData = jsonfile.readFileSync(utils.getVerseSuggestionsFileLocation());
 
-proc.getMainSuggestionsForApp = function(){
+proc.getMainSuggestionsForApp = function(addPrevNextSuggestion){
     var res = [];
 
     var categoriesList = internal.getCategoriesList();
     res.push( 'Read about '+ categoriesList[ utils.getRandomArbitrary(0,categoriesList.length) ] );
 
-    var limit = 5;
+    if(addPrevNextSuggestion){
+        var limit = 1 ; 
+    }else{
+        var limit = 5;
+    }
     var list = internal.getSuggestionVerseList();
     var p = list.length/limit;
     for(var i=1 ; i<=limit ; i++){
@@ -23,6 +27,9 @@ proc.getMainSuggestionsForApp = function(){
             list[ utils.getRandomArbitrary(p*(i-1),p*i) ]
           ) );
     }
+
+    res = res.concat(proc.getReadPrevNextSuggestions());
+
     return res;
 };
 
