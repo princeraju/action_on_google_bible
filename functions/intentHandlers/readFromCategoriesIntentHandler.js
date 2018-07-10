@@ -11,11 +11,7 @@ const suggestionProcessor = require("../dataProcessors/suggestionProcessor");
 var internal = {};
 
 exports.handle = function(conv){
-
-    console.log("CategoryIntentHandler");
-
     var categoryName = conv.parameters[ constants.PARAMETERS.CATEGORY_NAME ];
-    console.log(conv.parameters);
     if(categoryName){
         if(!suggestionProcessor.isValidVerseCategory(categoryName)){
             conv.ask(`Sorry. I do not remember anything about ${categoryName}. 
@@ -25,7 +21,8 @@ exports.handle = function(conv){
             internal.readBible(conv,result);
         }
     }else{
-
+        var result = suggestionProcessor.getBibleVerseForCategory(null);
+        internal.readBible(conv,result);
     }
     conv.ask(new Suggestions( suggestionProcessor.getCategorySuggestionForApp() ));
 };

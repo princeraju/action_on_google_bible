@@ -25,7 +25,7 @@ proc.getMainSuggestionsForApp = function(){
 };
 
 proc.getBibleVerseForCategory = function(category){
-    var list = internal.getSuggestionVerseList();
+    var list = internal.getSuggestionVerseList(category);
 
     var temp = parseInt(list[ utils.getRandomArbitrary(0,list.length) ]);
     const verse = parseInt(temp%1000); temp = parseInt(temp/1000);
@@ -34,6 +34,7 @@ proc.getBibleVerseForCategory = function(category){
 
     return internal.getBibleVerseForSuggestion(bookNum,chapter,verse);
 };
+
 
 proc.getCategorySuggestionForApp = function(noMetaInfo){
     var res=[];
@@ -73,7 +74,7 @@ internal.getBibleVerseForSuggestion = function(bookNum , chapter , verse){
         return null;
     }else{
         result.verse = {};
-        result.verse.pos = `${bookName} ${chapter}:${verse}`;
+        result.verse.pos = `${bibleReadProcessor.getBibleIdToString(resultBible[0].id)}`;
         result.verse.id = resultBible[0].id;
         result.verse.words = resultBible[0].d;
         return result;
