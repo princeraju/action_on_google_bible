@@ -7,7 +7,6 @@ const bibleReadProcessor = require('./bibleReadProcessor');
 
 var proc = {};
 var internal = {};
-internal.MAIN_SUGGESTION_LIMIT = 2 ;
 internal.suggestionData = jsonfile.readFileSync(utils.getVerseSuggestionsFileLocation());
 
 proc.getMainSuggestionsForApp = function(){
@@ -16,9 +15,10 @@ proc.getMainSuggestionsForApp = function(){
     var categoriesList = internal.getCategoriesList();
     res.push( 'Read about '+ categoriesList[ utils.getRandomArbitrary(0,categoriesList.length) ] );
 
+    var limit = 5;
     var list = internal.getSuggestionVerseList();
-    var p = list.length/internal.MAIN_SUGGESTION_LIMIT;
-    for(var i=1 ; i<=internal.MAIN_SUGGESTION_LIMIT ; i++){
+    var p = list.length/limit;
+    for(var i=1 ; i<=limit ; i++){
         res.push( bibleReadProcessor.getBibleIdToString(  
             list[ utils.getRandomArbitrary(p*(i-1),p*i) ]
           ) );
@@ -41,8 +41,9 @@ proc.getBibleVerseForCategory = function(category){
 proc.getCategorySuggestionForApp = function(noMetaInfo){
     var res=[];
     var categoriesList = internal.getCategoriesList();
-    var p = categoriesList.length/internal.MAIN_SUGGESTION_LIMIT;
-    for(var i=1 ; i<=internal.MAIN_SUGGESTION_LIMIT ; i++){
+    var limit = 5;
+    var p = categoriesList.length/limit;
+    for(var i=1 ; i<=limit ; i++){
         var data = categoriesList[ utils.getRandomArbitrary(p*(i-1),p*i) ];
         if(!noMetaInfo){
             data = `Read about `+data; 
