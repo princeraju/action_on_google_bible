@@ -12,6 +12,8 @@ var internal = {};
 
 exports.handle = function(conv){
 
+    console.log("CategoryIntentHandler");
+
     var categoryName = conv.parameters[ constants.PARAMETERS.CATEGORY_NAME ];
     console.log(conv.parameters);
     if(categoryName){
