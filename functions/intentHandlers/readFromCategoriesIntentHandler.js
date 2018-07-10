@@ -18,10 +18,16 @@ exports.handle = function(conv){
             Maybe you can ask me to read about ${suggestionProcessor.getCategorySuggestionForApp(true).join(',')}`);
         }else{
             var result = suggestionProcessor.getBibleVerseForCategory(categoryName);
+            if(!result){//Incase the data stored is wrong a single step failover.
+                result = suggestionProcessor.getBibleVerseForCategory(categoryName);
+            }
             internal.readBible(conv,result);
         }
     }else{
         var result = suggestionProcessor.getBibleVerseForCategory(null);
+        if(!result){ //Incase the data stored is wrong a single step failover.
+            result = suggestionProcessor.getBibleVerseForCategory(null);
+        }
         conv.ask("How about this?");
         internal.readBible(conv,result);
     }
