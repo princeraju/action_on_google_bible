@@ -3,3 +3,5 @@ package-lock.json
 *.DS_store
 *.log
 .firebaserc
+**/script_folderx/*
+!**/script_folderx/.gitkeep

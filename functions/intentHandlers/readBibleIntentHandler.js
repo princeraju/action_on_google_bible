@@ -33,7 +33,7 @@ exports.handle = function(conv){
             verse1 = conv.data.bibleReadFollowUpParameters[constants.PARAMETERS.VERSE1];
         }
 
-        if(anyNum){ //Case when book intent may take number
+        if(anyNum){ //Case the response can be chapter or verse
             if(!chapter1){
                 chapter1 = anyNum;
             }else if(!verse1){
