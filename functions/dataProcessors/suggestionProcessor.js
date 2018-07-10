@@ -12,6 +12,10 @@ internal.suggestionData = jsonfile.readFileSync(utils.getVerseSuggestionsFileLoc
 
 proc.getMainSuggestionsForApp = function(){
     var res = [];
+
+    var categoriesList = internal.getCategoriesList();
+    res.push( 'Read about '+ categoriesList[ utils.getRandomArbitrary(0,categoriesList.length) ] );
+
     var list = internal.getSuggestionVerseList();
     var p = list.length/internal.MAIN_SUGGESTION_LIMIT;
     for(var i=1 ; i<=internal.MAIN_SUGGESTION_LIMIT ; i++){
@@ -19,8 +23,6 @@ proc.getMainSuggestionsForApp = function(){
             list[ utils.getRandomArbitrary(p*(i-1),p*i) ]
           ) );
     }
-    var categoriesList = internal.getCategoriesList();
-    res.push( 'Read about '+ categoriesList[ utils.getRandomArbitrary(0,categoriesList.length) ] );
     return res;
 };
 
