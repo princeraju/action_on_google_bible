@@ -18,11 +18,11 @@ exports.handle = function(conv){
             Maybe you can ask me to read about ${suggestionProcessor.getCategorySuggestionForApp(true).join(',')}`);
         }else{
             var result = suggestionProcessor.getBibleVerseForCategory(categoryName);
-            conv.ask("How about this?");
             internal.readBible(conv,result);
         }
     }else{
         var result = suggestionProcessor.getBibleVerseForCategory(null);
+        conv.ask("How about this?");
         internal.readBible(conv,result);
     }
     conv.ask(new Suggestions( suggestionProcessor.getCategorySuggestionForApp() ));
