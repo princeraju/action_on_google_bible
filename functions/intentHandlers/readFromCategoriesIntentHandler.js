@@ -30,6 +30,7 @@ exports.handle = function(conv){
         }
         conv.ask("Mm.. How about this?");
         internal.readBible(conv,result);
+        conv.ask(`Maybe you can ask me to read about ${suggestionProcessor.getCategorySuggestionForApp(true).join(',')}`);
     }
     conv.ask(new Suggestions( suggestionProcessor.getCategorySuggestionForApp() ));
 };
