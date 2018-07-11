@@ -28,7 +28,7 @@ exports.handle = function(conv){
         if(!result){ //Incase the data stored is wrong a single step failover.
             result = suggestionProcessor.getBibleVerseForCategory(null);
         }
-        conv.ask(`I know a lot about ${suggestionProcessor.getCategorySuggestionForApp(true).join(',')}. Right now I've something for you.`);
+        conv.ask(`I know a lot about ${suggestionProcessor.getCategorySuggestionForApp(true).slice(0,3).join(',')} etc. Right now I've something for you.`);
         internal.readBible(conv,result);
     }
     conv.ask(new Suggestions( suggestionProcessor.getCategorySuggestionForApp() ));
