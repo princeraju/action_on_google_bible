@@ -7,7 +7,7 @@ const {
 
 const bibleReadProcessor = require("../dataProcessors/bibleReadProcessor");
 const suggestionProcessor = require("../dataProcessors/suggestionProcessor");
-const intentUtils = require("../intentUtils");
+const intentUtils = require("./intentUtils");
 
 var internal = {}
 

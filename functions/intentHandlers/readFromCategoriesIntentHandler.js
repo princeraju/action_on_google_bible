@@ -5,7 +5,7 @@ const {
 } = require('actions-on-google');
 
 const constants = require("../constants");
-const intentUtils = require("../intentUtils");
+const intentUtils = require("./intentUtils");
 const suggestionProcessor = require("../dataProcessors/suggestionProcessor");
 
 var internal = {};

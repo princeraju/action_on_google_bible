@@ -4,7 +4,7 @@ const {
     Suggestions,
     SimpleResponse,
 } = require('actions-on-google');
-const suggestionProcessor = require("./dataProcessors/suggestionProcessor");
+const suggestionProcessor = require("../dataProcessors/suggestionProcessor");
 
 var intentUtils = {};
 

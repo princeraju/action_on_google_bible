@@ -2,7 +2,7 @@
 
 const bibleReadProcessor = require("../dataProcessors/bibleReadProcessor");
 const constants = require("../constants");
-const intentUtils = require("../intentUtils");
+const intentUtils = require("./intentUtils");
 
 exports.handle = function(conv){
     const parameters = conv.parameters;
