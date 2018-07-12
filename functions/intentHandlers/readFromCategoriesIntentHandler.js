@@ -31,5 +31,4 @@ exports.handle = function(conv){
         conv.ask(`I know a lot about ${suggestionProcessor.getCategorySuggestionForApp(true).slice(0,3).join(',')} etc. Right now I've something for you.`);
         intentUtils.readBible(conv,result);
     }
-    conv.ask(new Suggestions( suggestionProcessor.getCategorySuggestionForApp() ));
 };
