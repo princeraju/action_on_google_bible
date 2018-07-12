@@ -88,9 +88,9 @@ proc.getPrevNextVerse = function(id,type){
     const resultBibleIndex = data.findIndex(a => a.c == chapter && a.v == verse );
 
     if(type == constants.PREVIOUS && resultBibleIndex == 0 ){
-        result.errormessage = `You previously heard ${processorUtils.getBibleIdToString(id)} which is the first verse of the book`;
+        result.errormessage = `You previously heard ${processorUtils.getBibleIdToString(id)} which is the first verse of the book. I'll be able to help you if you ask me to read the next verse.`;
     }else if( type == constants.NEXT &&  resultBibleIndex == data.length-1 ){
-        result.errormessage = `You just heard ${processorUtils.getBibleIdToString(id)} which is the last verse of the book`;
+        result.errormessage = `You just heard ${processorUtils.getBibleIdToString(id)} which is the last verse of the book. I'll be able to help you if you ask me to read the previous verse.`;
     }else{
         if(type == constants.PREVIOUS){
             var returnResVerse = data[resultBibleIndex-1];

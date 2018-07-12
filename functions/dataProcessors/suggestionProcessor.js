@@ -78,20 +78,19 @@ proc.getReadPrevNextSuggestions = function(){
 proc.getAfterFirstBibleReadSuggestion = function(){
     var available = [
         "I can read the previous or next verse. Just ask me.",
-        `I know a lot about ${proc.getCategorySuggestionForApp(true).slice(0,3)}. Just ask me.`,
-        `Just ask me if you want to read something else.`,
-        `Reading one more verse from the Holy Bible is always good for you. Just ask me if you want to.`
+        `I would be really happy if you ask me to read about ${proc.getCategorySuggestionForApp(true).slice(0,3)}.`,
+        `I really liked that. Want to read something else?`,
+        `I may be having something special for you. Ask me if you want to hear it.`
     ];
     return available[ utils.getRandomArbitrary(0,available.length) ];
 };
 
 proc.getAfterSuccessiveBibleReadSuggestion = function(){
     var available = [
-        "Wanna read anything else?",
-        "Trying something else?",
-        "Want next verse? Just ask me",
-        "Continue asking. I'm here for you.",
-        "Anything else?"
+        "Want to read anything else?",
+        "Try something else?",
+        "Want to read next verse? Just ask me",
+        "Ask me to read something sepcial. I'll not disappoint you.",
     ];
     return available[ utils.getRandomArbitrary(0,available.length) ];
 };
