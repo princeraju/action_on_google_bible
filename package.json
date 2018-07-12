@@ -1,7 +1,7 @@
 {
   "name": "holy-bible",
   "description": "Webhook code for the diagflow which supports Holy Bible Action on Google",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "license": "Apache Version 2.0",
   "author": "Prince Raju",
   "engines": {

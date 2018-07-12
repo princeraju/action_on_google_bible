@@ -87,11 +87,13 @@ proc.getAfterFirstBibleReadSuggestion = function(){
 };
 
 proc.getAfterSuccessiveBibleReadSuggestion = function(){
+    var categories = proc.getCategorySuggestionForApp(true);
     var available = [
         "Want to read anything else?",
-        "If you're thinking what the previous verse is, just ask me.",
+        "Want to read the previous verse? just ask me.",
         "Want to read next verse? Just ask me",
         "Ask me to read something special. I'll not disappoint you.",
+        `Maybe you can ask me to read about ${categories.slice(0,2)} or ${categories[2]}.`
     ];
     return available[ utils.getRandomArbitrary(0,available.length) ];
 };
