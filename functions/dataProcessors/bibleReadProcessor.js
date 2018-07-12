@@ -69,8 +69,8 @@ proc.getVerse = function(bookName,chapter,verse){
 
     result.verse = {};
     result.verse.pos = `${bookName} ${chapter}:${verse}`;
-    result.verse.id = resultBible[0].id;
-    result.verse.words = resultBible[0].d;
+    result.verse.id = data[0].id;
+    result.verse.words = data[0].d;
     return result;
 
 }
