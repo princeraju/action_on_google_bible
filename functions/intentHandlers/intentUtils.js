@@ -32,10 +32,10 @@ intentUtils.readBible = function(conv,result){
         conv.data.previousBibleVerse = result.verse;
         var prefix="";
         if(result.additionalSuccessPrefixText){
-            prefix = `${result.additionalSuccessPrefixText} <break time="800ms"> `;
+            prefix = result.additionalSuccessPrefixText;
         }
         conv.ask(new SimpleResponse({
-            speech: '<speak>'+prefix+result.verse.pos+'<break time="500ms"/>'+result.verse.words+'</speak>', 
+        speech: `<speak>${prefix}<emphasis level="strong">${result.verse.pos}<break time="500ms"/> ${result.verse.words}</emphasis></speak>`, 
             text: `${result.verse.pos}\n ${result.verse.words}`,
         }));
         if( !conv.data.isFirstRead ){
