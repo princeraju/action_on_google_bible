@@ -4,12 +4,13 @@ This is the webhook code used to serve the Holy Bible, an Action for the Google 
 Actions on Google lets you extend the functionality of the Google Assistant with Actions.
 
 ## Actions supported
-Ok Google,Talk to Holy Bible to
+Ok Google,ask Holy Bible to
 * Read John 3:16
 * Tell me about family (ask the topic you want)
 * Talk something
 * Read next verse
 * Read previous verse
+* Psalms Chapter 1
 
 Actions uses advanced Natural Language Undertanding (NLU) and Machine Learning to understand the queries and map it to the corresponding intents.
 
