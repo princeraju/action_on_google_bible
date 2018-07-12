@@ -62,7 +62,7 @@ proc.getVerse = function(bookName,chapter,verse){
 
     data = data.filter( a=> a.v == verse ); //data reduced to correct verse
     if(data.length == 0){
-        result.followUpMessage = `Ehh.. ${bookName} chapter ${chapter} contains only ${verseCountAvailable} verses. So which verse?`;
+        result.followUpMessage = `${bookName} chapter ${chapter} contains only ${verseCountAvailable} verses. Which verse to read?`;
         result.followUpSuggestions=processorUtils.getRandomChapters(verseCountAvailable);
         return result;
     }
