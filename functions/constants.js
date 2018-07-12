@@ -3,7 +3,7 @@
 var constants ={
     "BASE_FOLDER":"./data",
     "DATA_LOCATION" : {
-        "ENGLISH_ASV_ROOT":"/bible/en/bbe",
+        "ENGLISH_ASV_ROOT":"/bible/en/kjv",
         "BOOK_KEY_LOCATION" : {
             "ENGLISH" : "/meta/key_english.json"
         },
