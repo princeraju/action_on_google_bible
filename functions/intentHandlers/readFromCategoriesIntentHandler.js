@@ -29,7 +29,7 @@ exports.handle = function(conv){
             result = suggestionProcessor.getBibleVerseForCategory(null);
         }
         conv.ask(`I know a lot about ${suggestionProcessor.getCategorySuggestionForApp(true).slice(0,3).join(',')} etc. Right now I've something for you.`);
-        internal.readBible(conv,result);
+        intentUtils.readBible(conv,result);
     }
     conv.ask(new Suggestions( suggestionProcessor.getCategorySuggestionForApp() ));
 };
