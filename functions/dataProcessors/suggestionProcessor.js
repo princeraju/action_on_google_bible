@@ -89,7 +89,7 @@ proc.getAfterFirstBibleReadSuggestion = function(){
 proc.getAfterSuccessiveBibleReadSuggestion = function(){
     var available = [
         "Want to read anything else?",
-        "Try something else?",
+        "If you're thinking what the previous verse is, just ask me.",
         "Want to read next verse? Just ask me",
         "Ask me to read something special. I'll not disappoint you.",
     ];
