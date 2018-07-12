@@ -28,7 +28,7 @@ exports.handle = function(conv){
         if(!result){ //Incase the data stored is wrong, a single step failover.
             result = suggestionProcessor.getBibleVerseForCategory(null);
         }
-        result.additionalSuccessPrefixText = `Hmm. How about this?`;
+        result.additionalSuccessPrefixText = `How about this?`;
         intentUtils.readBible(conv,result);
     }
 };
