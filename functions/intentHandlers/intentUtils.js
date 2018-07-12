@@ -17,6 +17,7 @@ intentUtils.readBible = function(conv,result){
     //result.verse.words eg: For God so loved....
     //result.followUpSuggestions
     //result.errormessage
+    //result.additionalSuccessPrefixText
 
     if(result.followUpMessage){
         conv.ask(result.followUpMessage);
@@ -29,6 +30,9 @@ intentUtils.readBible = function(conv,result){
     }else if(result.verse){
         conv.data.bibleReadFollowUpParameters = {};
         conv.data.previousBibleVerse = result.verse;
+        if(result.additionalSuccessPrefixText){
+            conv.ask(result.additionalSuccessPrefixText);
+        }
         conv.ask(new SimpleResponse({
             speech: `<speak>${result.verse.pos}<break time="500ms"/> ${result.verse.words}</speak>`, 
             text: `${result.verse.pos}\n ${result.verse.words}`,
