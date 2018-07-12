@@ -76,9 +76,10 @@ proc.getReadPrevNextSuggestions = function(){
 };
 
 proc.getAfterFirstBibleReadSuggestion = function(){
+    var categories = proc.getCategorySuggestionForApp(true);
     var available = [
         "I can read the previous or next verse. Just ask me.",
-        `I would be really happy if you ask me to read about ${proc.getCategorySuggestionForApp(true).slice(0,3)}.`,
+        `I would be really happy if you ask me to read about ${categories.slice(0,2)} or ${categories[2]}.`,
         `I really liked that. Want to read something else?`,
         `I may be having something special for you. Ask me if you want to hear it.`
     ];
