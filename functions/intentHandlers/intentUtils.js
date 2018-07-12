@@ -29,14 +29,14 @@ intentUtils.readBible = function(conv,result){
     }else if(result.verse){
         conv.data.bibleReadFollowUpParameters = {};
         conv.data.previousBibleVerse = result.verse;
-        conv.tell(new SimpleResponse({
+        conv.ask(new SimpleResponse({
             speech: `<speak>${result.verse.pos}<break time="500ms"/> ${result.verse.words}</speak>`, 
             text: `${result.verse.pos}\n ${result.verse.words}`,
           }));
-        conv.tell(new Suggestions( suggestionProcessor.getMainSuggestionsForApp(true) ));
+        conv.close(new Suggestions( suggestionProcessor.getMainSuggestionsForApp(true) ));
     }else if(result.errormessage){
-        conv.tell(result.errormessage);
-        conv.tell(new Suggestions( suggestionProcessor.getMainSuggestionsForApp(true) )); 
+        conv.ask(result.errormessage);
+        conv.close(new Suggestions( suggestionProcessor.getMainSuggestionsForApp(true) )); 
     }else{
         conv.data.bibleReadFollowUpParameters = {};
         conv.ask(`Oh hoo..There's some issue. Can I help you in some other way?`);

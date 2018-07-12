@@ -3,6 +3,7 @@
 const constants = require('../constants')
 const utils = require('../utils')
 const jsonfile = require('jsonfile')
+const processorUtils = require('./processorUtils');
 
 
 var proc = {};
@@ -28,17 +29,30 @@ proc.getVerse = function(bookName,chapter,verse){
         result.followUpCurrentParameters[constants.PARAMETERS.BOOK1] = bookName;
     }
 
+    const chapterFile = utils.getBibleContentFolderLocation()+"/"+bookNum+constants.CHAPTER_FILE_NAME_SUFFIX+".json";
+    var data = jsonfile.readFileSync(chapterFile).data;
+
+    var chapterCountAvailable = data.length; 
     if(!chapter){
-        result.followUpMessage = "What chapter would you like to hear?";
-        result.followUpSuggestions=['Chapter 5','Chapter 2','Chapter 1']; //TODO, add to suggestion generator
+        result.followUpMessage = `From ${bookName} what chapter would you like to hear?`;
+        result.followUpSuggestions=processorUtils.getRandomChapters(chapterCountAvailable);
         return result;
     }else{
+        
+        data = data.filter( a => a.c == chapter ); //data reduced to inside chapters
+        if(data.length == 0){
+            result.followUpMessage = `${bookName} contains only ${chapterCountAvailable} chapters. Can you tell me one from that?`;
+            result.followUpSuggestions=processorUtils.getRandomChapters(chapterCountAvailable);
+            return result;
+        }
         result.followUpCurrentParameters[constants.PARAMETERS.CHAPTER1] = chapter;
     }
 
+    var verseCountAvailable = data.length; 
+
     if(!verse){
-        result.followUpMessage = "and what verse?";
-        result.followUpSuggestions=['Verse 5','Verse 2','Verse 1']; //TODO, add to suggestion generator
+        result.followUpMessage = `and what verse from chapter ${chapter}?`;
+        result.followUpSuggestions=processorUtils.getRandomVerses(verseCountAvailable);
         return result;
     }
 
@@ -46,22 +60,19 @@ proc.getVerse = function(bookName,chapter,verse){
         verse = -1 * verse; //To overcome issue in John 3-16 where verse comes as -16
     }
 
-    const chapterFile = utils.getBibleContentFolderLocation()+"/"+bookNum+constants.CHAPTER_FILE_NAME_SUFFIX+".json";
-    
-    const data = jsonfile.readFileSync(chapterFile).data;
-    const resultBible = data.filter(a => a.c == chapter && a.v == verse );
-    if(resultBible.length == 0){
-        result.followUpMessage = `Sorry. ${bookName} ${chapter}:${verse} is not available in the holy bible`;
-        result.followUpCurrentParameters= {};//Clearing follow up parameters
-        result.followUpSuggestions=['1 John 3:16','Proverbs 1:1']; //TODO, add to suggestion generator
-        return result;
-    }else{
-        result.verse = {};
-        result.verse.pos = `${bookName} ${chapter}:${verse}`;
-        result.verse.id = resultBible[0].id;
-        result.verse.words = resultBible[0].d;
+    data = data.filter( a=> a.v == verse ); //data reduced to correct verse
+    if(data.length == 0){
+        result.followUpMessage = `Ehh.. ${bookName} chapter ${chapter} contains only ${verseCountAvailable} verses. So which verse?`;
+        result.followUpSuggestions=processorUtils.getRandomChapters(verseCountAvailable);
         return result;
     }
+
+    result.verse = {};
+    result.verse.pos = `${bookName} ${chapter}:${verse}`;
+    result.verse.id = resultBible[0].id;
+    result.verse.words = resultBible[0].d;
+    return result;
+
 }
 
 
@@ -77,9 +88,9 @@ proc.getPrevNextVerse = function(id,type){
     const resultBibleIndex = data.findIndex(a => a.c == chapter && a.v == verse );
 
     if(type == constants.PREVIOUS && resultBibleIndex == 0 ){
-        result.errormessage = `You previously heard ${proc.getBibleIdToString(id)} which is the first verse of the book`;
+        result.errormessage = `You previously heard ${processorUtils.getBibleIdToString(id)} which is the first verse of the book`;
     }else if( type == constants.NEXT &&  resultBibleIndex == data.length-1 ){
-        result.errormessage = `You just heard ${proc.getBibleIdToString(id)} which is the last verse of the book`;
+        result.errormessage = `You just heard ${processorUtils.getBibleIdToString(id)} which is the last verse of the book`;
     }else{
         if(type == constants.PREVIOUS){
             var returnResVerse = data[resultBibleIndex-1];
@@ -87,31 +98,16 @@ proc.getPrevNextVerse = function(id,type){
             var returnResVerse = data[resultBibleIndex+1];
         }
         result.verse = {};
-        result.verse.pos = proc.getBibleIdToString(returnResVerse.id);
+        result.verse.pos = processorUtils.getBibleIdToString(returnResVerse.id);
         result.verse.id = returnResVerse.id;
         result.verse.words = returnResVerse.d;
     }
     return result;
 };
 
-internal.bibleBookKeys = jsonfile.readFileSync(utils.getBookKeyFileLocation()).resultset.keys;;
+internal.bibleBookKeys = jsonfile.readFileSync(utils.getBookKeyFileLocation()).resultset.keys;
 
-proc.getBibleIdToString = function(id){
-    var temp = parseInt(id);
-    const verse = parseInt(temp%1000); temp = parseInt(temp/1000);
-    const chapter = parseInt(temp%1000); temp = parseInt(temp/1000);
-    const bookNum = parseInt(temp%1000);
 
-    const keys = internal.bibleBookKeys;
-    const resultKey = keys.filter( arr => arr.b == bookNum );
-
-    if(resultKey.length == 0){
-        console.log("Id to string conversion failed for: "+id);
-        return -1;
-    }
-    return `${resultKey[0].n} ${chapter}:${verse}`;
-    
-};
 
 internal.getBookSequenceNumber = function(bookName){
     if(!bookName){

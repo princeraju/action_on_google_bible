@@ -4,6 +4,7 @@ const constants = require('../constants')
 const utils = require('../utils')
 const jsonfile = require('jsonfile')
 const bibleReadProcessor = require('./bibleReadProcessor');
+const processorUtils = require('./processorUtils');
 
 var proc = {};
 var internal = {};
@@ -23,7 +24,7 @@ proc.getMainSuggestionsForApp = function(addPrevNextSuggestion){
     var list = internal.getSuggestionVerseList();
     var p = list.length/limit;
     for(var i=1 ; i<=limit ; i++){
-        res.push( bibleReadProcessor.getBibleIdToString(  
+        res.push( processorUtils.getBibleIdToString(  
             list[ utils.getRandomArbitrary(p*(i-1),p*i) ]
           ) );
     }
@@ -53,7 +54,7 @@ proc.getCategorySuggestionForApp = function(noMetaInfo){
     for(var i=1 ; i<=limit ; i++){
         var data = categoriesList[ utils.getRandomArbitrary(p*(i-1),p*i) ];
         if(!noMetaInfo){
-            data = `Read about `+data; 
+            data = `Read about `+ data; 
         }
         res.push(data);    
     }
@@ -84,7 +85,7 @@ internal.getBibleVerseForSuggestion = function(bookNum , chapter , verse){
         return null;
     }else{
         result.verse = {};
-        result.verse.pos = `${bibleReadProcessor.getBibleIdToString(resultBible[0].id)}`;
+        result.verse.pos = `${processorUtils.getBibleIdToString(resultBible[0].id)}`;
         result.verse.id = resultBible[0].id;
         result.verse.words = resultBible[0].d;
         return result;
