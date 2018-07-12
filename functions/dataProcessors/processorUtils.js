@@ -48,7 +48,7 @@ internal.randomTextGen = function(text,max){
     var p = max/sections;
     for(var i=1 ; i<=sections ; i++){
         var data = utils.getRandomArbitrary(p*(i-1),p*i);
-        res.push(`${text} ${data}`);    
+        result.push(`${text} ${data}`);    
     }
     return result;
 };
