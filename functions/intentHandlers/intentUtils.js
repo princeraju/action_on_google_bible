@@ -35,7 +35,7 @@ intentUtils.readBible = function(conv,result){
             prefix = `${result.additionalSuccessPrefixText} <break time="800ms"> `;
         }
         conv.ask(new SimpleResponse({
-            speech: ssml`<speak>${prefix} ${result.verse.pos}<break time="500ms"/> ${result.verse.words}</speak>`, 
+            speech: '<speak>'+prefix+result.verse.pos+'<break time="500ms"/>'+result.verse.words+'</speak>', 
             text: `${result.verse.pos}\n ${result.verse.words}`,
         }));
         if( !conv.data.isFirstRead ){
