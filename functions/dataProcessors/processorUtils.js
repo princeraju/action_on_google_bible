@@ -45,9 +45,17 @@ proc.getRandomVerses = function(max){
 internal.randomTextGen = function(text,max){
     var result = [];
     var sections = 3;
-    var p = max/sections;
-    for(var i=1 ; i<=sections ; i++){
-        var data = utils.getRandomArbitrary(p*(i-1),p*i);
+    if(max<sections){
+        for(var i=1;i<=max;i++){
+            result.push(`${text} ${i}`);    
+        }
+        return result;
+    }
+    var division = parseInt(max/sections);
+    var p = division;
+    for(var i=0 ; i<sections ; i++){
+        var data = p;
+        p = p+division;
         result.push(`${text} ${data}`);    
     }
     return result;

@@ -32,7 +32,7 @@ proc.getVerse = function(bookName,chapter,verse){
     const chapterFile = utils.getBibleContentFolderLocation()+"/"+bookNum+constants.CHAPTER_FILE_NAME_SUFFIX+".json";
     var data = jsonfile.readFileSync(chapterFile).data;
 
-    var chapterCountAvailable = data.length; 
+    var chapterCountAvailable = [...new Set(data.map(item => item.c ))].length; //only unique chapters
     if(!chapter){
         result.followUpMessage = `From ${bookName} what chapter would you like to hear?`;
         result.followUpSuggestions=processorUtils.getRandomChapters(chapterCountAvailable);
