@@ -75,6 +75,27 @@ proc.getReadPrevNextSuggestions = function(){
     ];
 };
 
+proc.getAfterFirstBibleReadSuggestion = function(){
+    var available = [
+        "I can read the previous or next verse. Just ask me.",
+        `I know a lot about ${proc.getCategorySuggestionForApp(true).slice(0,3)}. Just ask me.`,
+        `Just ask me if you want to read something else.`,
+        `Reading one more verse from the Holy Bible is always good for you. Just ask me if you want to.`
+    ];
+    return available[ utils.getRandomArbitrary(0,available.length) ];
+};
+
+proc.getAfterSuccessiveBibleReadSuggestion = function(){
+    var available = [
+        "Wanna read anything else?",
+        "Trying something else?",
+        "Want next verse? Just ask me",
+        "Continue asking. I'm here for you.",
+        "Anything else?"
+    ];
+    return available[ utils.getRandomArbitrary(0,available.length) ];
+};
+
 internal.getBibleVerseForSuggestion = function(bookNum , chapter , verse){
     var result={};
     const chapterFile = utils.getBibleContentFolderLocation()+"/"+bookNum+constants.CHAPTER_FILE_NAME_SUFFIX+".json";
@@ -120,6 +141,7 @@ internal.getCategoriesList = function(){
     }
     return result;
 };
+
 
 
 module.exports = proc;

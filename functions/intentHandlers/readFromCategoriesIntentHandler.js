@@ -15,7 +15,7 @@ exports.handle = function(conv){
     if(categoryName){
         if(!suggestionProcessor.isValidVerseCategory(categoryName)){
             conv.ask(`Sorry. I do not remember anything about ${categoryName}. 
-            Maybe you can ask me to read about ${suggestionProcessor.getCategorySuggestionForApp(true).join(',')}`);
+            Maybe you can ask me to read about ${suggestionProcessor.getCategorySuggestionForApp(true).slice(0,3).join(',')}`);
         }else{
             var result = suggestionProcessor.getBibleVerseForCategory(categoryName);
             if(!result){//Incase the data stored is wrong a single step failover.

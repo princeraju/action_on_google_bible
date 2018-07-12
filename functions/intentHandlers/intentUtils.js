@@ -32,11 +32,17 @@ intentUtils.readBible = function(conv,result){
         conv.ask(new SimpleResponse({
             speech: `<speak>${result.verse.pos}<break time="500ms"/> ${result.verse.words}</speak>`, 
             text: `${result.verse.pos}\n ${result.verse.words}`,
-          }));
-        conv.close(new Suggestions( suggestionProcessor.getMainSuggestionsForApp(true) ));
+        }));
+        if( !conv.data.isFirstRead ){
+            conv.data.isFirstRead=true;
+            conv.ask(suggestionProcessor.getAfterFirstBibleReadSuggestion());
+        }else{
+            conv.ask(suggestionProcessor.getAfterSuccessiveBibleReadSuggestion());
+        }
+        conv.ask(new Suggestions( suggestionProcessor.getMainSuggestionsForApp(true) ));
     }else if(result.errormessage){
         conv.ask(result.errormessage);
-        conv.close(new Suggestions( suggestionProcessor.getMainSuggestionsForApp(true) )); 
+        conv.ask(new Suggestions( suggestionProcessor.getMainSuggestionsForApp(true) )); 
     }else{
         conv.data.bibleReadFollowUpParameters = {};
         conv.ask(`Oh hoo..There's some issue. Can I help you in some other way?`);
